@@ -3,12 +3,13 @@ package main
 import (
 	"github.com/kataras/iris"
 	herolib "github.com/kataras/iris/hero"
-	. "github.com/cifren/ghyt/core/handler"
-	. "github.com/cifren/ghyt/core"
+	. "github.com/cifren/ghyt-api/ghyt/core"
+	. "github.com/cifren/ghyt-api/ghyt/core/handler"
     "path/filepath"
 	"runtime"
 	// TODO : implement log
 	// log "github.com/sirupsen/logrus"
+	"github.com/cifren/ghyt-api-demo/config"
 )
 
 func main() {
@@ -39,23 +40,10 @@ func register() herolib.Hero {
 	def := herolib.New()
 
 	all := make(map[string]interface{})
-	all["params"] = params()
+	all["params"] = config.GetConfig()
 	container := Container{All: all}
 	container.InitContainer()
 	def.Register(container)
 
 	return *def
-}
-
-func params() map[string]interface{} {
-	return map[string]interface{}{
-		"github": map[string]string{
-			"github_account": "",
-			"github_secret": "",
-		},
-		"youtrack": map[string]string{
-			"url": "",
-    		"token": "",
-		},
-	}
 }

@@ -1,0 +1,15 @@
+package config
+
+func GetConfig() map[string]interface{} {
+
+    return map[string]interface{}{
+        "github": map[string]string{
+            "github_account": "",
+            "github_secret": "",
+        },
+        "youtrack": map[string]string{
+            "url": "",
+            "token": "",
+        },
+    }
+}
