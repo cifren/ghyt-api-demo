@@ -17,3 +17,4 @@ config/parameters.go
 
 vendor/
 gopath/
+main

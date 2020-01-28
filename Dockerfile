@@ -2,5 +2,6 @@ FROM golang:1.12.15
 
 WORKDIR /go
 
-# GOPATH defined in docker-compose
-ENV PATH /go/gopath/bin:$PATH
+ENV GOPATH /go/gopath
+ENV PATH $GOPATH/bin:$PATH
+

@@ -5,26 +5,34 @@ dkr_go=$(dk_run) go
 r_go=$(dkr_go) go
 
 ## DOCKER
-dk@console:
+dev@console:
 	$(dkr_go) bash
 
-dk@build:
+dev@build:
 	$(dk) build go
 
-dk@stop:
+dev@stop:
 	$(dk) down --remove-orphan
 
-dk@start:
+dev@start:
 	$(dk) up -d go
 
-dk@restart: dk@stop dk@start
+dev@restart: dev@stop dev@start
 
-dk@logs:
+dev@logs:
 	$(dk) logs -f
+
+dev@install: dev@stop dev@mod.download dev@go.install-hot-reload dev@restart
 
 ## DEV
 dev@mod.clean:
 	$(r_go) mod tidy
+
+dev@mod.download:
+	$(r_go) mod download
+
+dev@go.install-hot-reload:
+	$(r_go) get github.com/githubnemo/CompileDaemon
 
 dev@init:
 	$(r_go) mod init github.com/cifren/ghyt-api-demo
@@ -34,12 +42,6 @@ dev@go:
 
 dev@go-run:
 	$(r_go) run main.go
-
-dev@go-watch:
-	$(dkr_go) gin --port 9000 --appPort 9001 run main.go
-
-dev@gin-install:
-	$(r_go) get -v github.com/codegangsta/gin
 
 # Use local code : create a folder vendor and change go.mod to use local code
 # !! Do not push your go.mod anymore !!
