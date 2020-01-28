@@ -17,7 +17,7 @@ dk@stop:
 dk@start:
 	$(dk) up -d go
 
-dk@restart: stop start
+dk@restart: dk@stop dk@start
 
 dk@logs:
 	$(dk) logs -f
@@ -28,7 +28,7 @@ dev@mod.clean:
 
 dev@init:
 	$(r_go) mod init github.com/cifren/ghyt-api-demo
-#
+
 dev@go:
 	$(r_go) $(c)
 
