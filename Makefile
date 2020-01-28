@@ -45,9 +45,13 @@ dev@go-run:
 
 # Use local code : create a folder vendor and change go.mod to use local code
 # !! Do not push your go.mod anymore !!
-dev@mod.local-dev:
-	git clone git@github.com:cifren/ghyt-api.git ./vendor/ghyt-api
+dev@mod.local-dev: dev@git.clone-ghyt-api dev@mod.replace-ghyt-api
+
+dev@mod.replace-ghyt-api:
 	$(r_go) mod edit -replace github.com/cifren/ghyt-api=./vendor/ghyt-api
+
+dev@git.clone-ghyt-api:
+	git clone git@github.com:cifren/ghyt-api.git ./vendor/ghyt-api
 
 ## SERVICES
 dev@ngrok.up:
