@@ -5,30 +5,30 @@ dkr_go=$(dk_run) go
 r_go=$(dkr_go) go
 
 ## DOCKER
-console:
+dk@console:
 	$(dkr_go) bash
 
-build:
+dk@build:
 	$(dk) build go
 
-stop:
+dk@stop:
 	$(dk) down --remove-orphan
 
-start:
+dk@start:
 	$(dk) up -d go
 
-restart: stop start
+dk@restart: stop start
 
-logs:
+dk@logs:
 	$(dk) logs -f
 
 ## DEV
 dev@mod.clean:
 	$(r_go) mod tidy
 
-init:
+dev@init:
 	$(r_go) mod init github.com/cifren/ghyt-api-demo
-
+#
 dev@go:
 	$(r_go) $(c)
 
@@ -41,11 +41,6 @@ dev@go-watch:
 dev@gin-install:
 	$(r_go) get -v github.com/codegangsta/gin
 
-
 ## SERVICES
-ngrok.up:
+dev@ngrok.up:
 	$(ngrok) http go:8080
-
-c:
-	$(dkr_go) env
-
