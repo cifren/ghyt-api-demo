@@ -16,3 +16,4 @@
 config/parameters.go
 
 vendor/
+gopath/

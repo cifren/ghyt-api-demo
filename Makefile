@@ -41,6 +41,12 @@ dev@go-watch:
 dev@gin-install:
 	$(r_go) get -v github.com/codegangsta/gin
 
+# Use local code : create a folder vendor and change go.mod to use local code
+# !! Do not push your go.mod anymore !!
+dev@mod.local-dev:
+	git clone git@github.com:cifren/ghyt-api.git ./vendor/ghyt-api
+	$(r_go) mod edit -replace github.com/cifren/ghyt-api=./vendor/ghyt-api
+
 ## SERVICES
 dev@ngrok.up:
 	$(ngrok) http go:8080

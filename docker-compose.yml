@@ -12,7 +12,7 @@ services:
     # For hot-reload, it is not working for now
     # command: ["gin", "--port", "9000", "--appPort", "9001", "run", "main.go"]
     environment:
-      GOPATH: "/go/vendor"
+      GOPATH: "/go/gopath"
 
   ngrok:
     image: wernight/ngrok
