@@ -3,6 +3,10 @@ dk_run=$(dk) run --rm
 ## GOLANG
 dkr_go=$(dk_run) go
 r_go=$(dkr_go) go
+## NGROK
+dkr_ngrok=$(dk_run) ngrok
+r_ngrok=$(dkr_ngrok) ngrok
+
 
 ## DOCKER
 dev@console:
@@ -55,4 +59,4 @@ dev@git.clone-ghyt-api:
 
 ## SERVICES
 dev@ngrok.up:
-	$(ngrok) http go:8080
+	$(r_ngrok) http go:9001
