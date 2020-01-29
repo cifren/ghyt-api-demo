@@ -7,8 +7,7 @@ import (
 	. "github.com/cifren/ghyt-api/ghyt/core/handler"
     "path/filepath"
 	"runtime"
-	// TODO : implement log
-	// log "github.com/sirupsen/logrus"
+
 	"github.com/cifren/ghyt-api-demo/config"
 )
 
@@ -40,7 +39,8 @@ func register() herolib.Hero {
 	def := herolib.New()
 
 	all := make(map[string]interface{})
-	all["params"] = config.GetConfig()
+	all["parameters"] = config.GetParameters()
+	all["jobConfig"] = config.GetJobConf()
 	container := Container{All: all}
 	container.InitContainer()
 	def.Register(container)

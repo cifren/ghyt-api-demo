@@ -4,7 +4,7 @@ import (
 	. "github.com/cifren/ghyt-api/ghyt/core/config"
 )
 
-func GetConf() []Job {
+func GetJobConf() []Job {
 
 	conf := []Job {
 		{

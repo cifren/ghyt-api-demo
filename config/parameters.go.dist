@@ -1,6 +1,6 @@
 package config
 
-func GetConfig() map[string]interface{} {
+func GetParameters() map[string]interface{} {
 
     return map[string]interface{}{
         "github": map[string]string{
