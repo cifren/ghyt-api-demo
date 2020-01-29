@@ -13,7 +13,8 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-config/parameters.go
+config/parameters.conf.go
+config/jobs.conf.go
 
 vendor/
 gopath/
