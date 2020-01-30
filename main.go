@@ -29,8 +29,7 @@ func main() {
 	webhookHandler := def.Handler(GhWebhookHandler)
 	app.Post("/webhook-gh", webhookHandler)
 
-	// http://localhost:8080
-	app.Run(iris.Addr(":" + os.Getenv("APP_PORT")), iris.WithoutServerError(iris.ErrServerClosed))
+	app.Run(iris.Addr(":" + os.Getenv("PORT")), iris.WithoutServerError(iris.ErrServerClosed))
 }
 
 func getPath() string {
