@@ -3,15 +3,18 @@ package main
 import (
 	"os"
 	"runtime"
+	"fmt"
     "path/filepath"
 	"github.com/kataras/iris"
 	herolib "github.com/kataras/iris/hero"
+	"github.com/joho/godotenv"
 	. "github.com/cifren/ghyt-api/ghyt/core"
 	. "github.com/cifren/ghyt-api/ghyt/core/handler"
 	"github.com/cifren/ghyt-api-demo/config"
 )
 
 func main() {
+	loadEnv()
 	// Web Server
 	app := iris.New()
 
@@ -33,6 +36,19 @@ func main() {
 func getPath() string {
 	_, b, _, _ := runtime.Caller(0)
 	return  filepath.Dir(b)
+}
+
+func loadEnv(){
+	var env string
+	if os.Getenv("APP_ENV") != "" {
+		env = "." + os.Getenv("APP_ENV")
+	}
+
+	filename := ".env" + env
+	err := godotenv.Load(filename)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("'%s' file not loaded but could be if created", filename))
+	}
 }
 
 func register() herolib.Hero {

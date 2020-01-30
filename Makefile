@@ -44,6 +44,10 @@ dev@init:
 dev@go:
 	$(r_go) $(c)
 
+dev@go-exec:
+	$(r_go) install main.go
+	./gopath/bin/main
+
 dev@go-run:
 	$(r_go) run main.go
 
