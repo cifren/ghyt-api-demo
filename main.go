@@ -1,13 +1,13 @@
 package main
 
 import (
+	"os"
+	"runtime"
+    "path/filepath"
 	"github.com/kataras/iris"
 	herolib "github.com/kataras/iris/hero"
 	. "github.com/cifren/ghyt-api/ghyt/core"
 	. "github.com/cifren/ghyt-api/ghyt/core/handler"
-    "path/filepath"
-	"runtime"
-
 	"github.com/cifren/ghyt-api-demo/config"
 )
 
@@ -27,7 +27,7 @@ func main() {
 	app.Post("/webhook-gh", webhookHandler)
 
 	// http://localhost:8080
-	app.Run(iris.Addr(":9001"), iris.WithoutServerError(iris.ErrServerClosed))
+	app.Run(iris.Addr(":" + os.Getenv("APP_PORT")), iris.WithoutServerError(iris.ErrServerClosed))
 }
 
 func getPath() string {
