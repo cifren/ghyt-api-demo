@@ -1,4 +1,3 @@
-// This is an example
 package config
 
 import (

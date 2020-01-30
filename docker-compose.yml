@@ -4,6 +4,8 @@ services:
   go:
     image: ghyt-api:latest
     build: .
+    env_file:
+      - .env.local
     ports:
      - "5000:9001"
     volumes:
