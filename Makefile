@@ -46,7 +46,7 @@ dev@go:
 
 dev@go-exec:
 	$(r_go) install main.go
-	./gopath/bin/main
+	export APP_ENV=local;./gopath/bin/main
 
 dev@go-run:
 	$(r_go) run main.go
