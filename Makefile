@@ -1,5 +1,6 @@
 dk=docker-compose
 dk_run=$(dk) run --rm
+dk_exec=$(dk) exec
 ## GOLANG
 dkr_go=$(dk_run) go
 r_go=$(dkr_go) go
@@ -8,7 +9,9 @@ dkr_ngrok=$(dk_run) ngrok
 r_ngrok=$(dkr_ngrok) ngrok
 ## NGROK
 dkr_npm=$(dk_run) npm
+dke_npm=$(dk_exec) npm
 r_npm=$(dkr_npm) npm
+e_npm=$(dke_npm) npm
 
 
 ## DOCKER
@@ -90,3 +93,9 @@ dev@dknpm.build:
 
 dev@npm.install:
 	$(r_npm) install
+
+dev@npm.install-pkg:
+	$(e_npm) install --save $(p)
+
+dev@npm.install-pkg-dev:
+	$(e_npm) install --save-dev $(p)
