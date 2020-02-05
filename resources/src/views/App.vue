@@ -15,22 +15,22 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="#">
+          <router-link class="navbar-item" to="/">
             Home
-          </a>
+          </router-link>
 
-          <a class="navbar-item" href="#/jobs">
+          <router-link class="navbar-item" to="/jobs">
             My jobs
-          </a>
+          </router-link>
 
-          <a class="navbar-item" href="#/logs">
+          <router-link class="navbar-item" to="/logs">
             My logs
-          </a>
+          </router-link>
         </div>
       </div>
     </nav>
-    <div class="container">
-      Content
+    <div>
+      <router-view class="view"></router-view>
     </div>
   </div>
 </template>
