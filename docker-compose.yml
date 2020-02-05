@@ -23,7 +23,7 @@ services:
       context: ./docker
       dockerfile: Dockerfile-npm
     volumes:
-      - ./resources:/home/node/app
+      - ./:/home/node/app
     environment:
       - NODE_ENV=developpment
     ports:
