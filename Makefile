@@ -99,3 +99,6 @@ dev@npm.install-pkg:
 
 dev@npm.install-pkg-dev:
 	$(e_npm) install --save-dev $(p)
+
+dev@npm.run-prod:
+	$(r_npm) run build
