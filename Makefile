@@ -6,6 +6,9 @@ r_go=$(dkr_go) go
 ## NGROK
 dkr_ngrok=$(dk_run) ngrok
 r_ngrok=$(dkr_ngrok) ngrok
+## NGROK
+dkr_npm=$(dk_run) npm
+r_npm=$(dkr_npm) npm
 
 
 ## DOCKER
@@ -64,3 +67,26 @@ dev@git.clone-ghyt-api:
 ## SERVICES
 dev@ngrok.up:
 	$(r_ngrok) http go:9001
+
+## NPM
+dev@dknpm.install: dev@npm.install dev@dknpm.restart
+
+dev@dknpm.start:
+	$(dk) up -d npm
+
+dev@dknpm.stop:
+	docker-compose rm -fsv npm
+
+dev@dknpm.restart: dev@dknpm.stop dev@dknpm.start
+
+dev@dknpm.console:
+	$(dkr_npm) bash
+
+dev@dknpm.logs:
+	$(dk) logs -f npm
+
+dev@dknpm.build:
+	$(dk) build npm
+
+dev@npm.install:
+	$(r_npm) install

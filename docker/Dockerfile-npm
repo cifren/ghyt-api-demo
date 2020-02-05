@@ -1,0 +1,8 @@
+FROM node:13.7.0-stretch
+
+RUN npm install -g @vue/cli
+RUN npm install -g @vue/cli-init
+
+WORKDIR /home/node/app
+
+CMD npm run dev
