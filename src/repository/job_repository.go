@@ -6,5 +6,5 @@ import (
 
 type JobRepository struct {}
 func (JobRepository) GetJobs() []config.Job {
-  return
+  return []config.Job {}
 }

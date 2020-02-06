@@ -54,11 +54,15 @@ func register() herolib.Hero {
 	def := herolib.New()
 
 	all := make(map[string]interface{})
-	all["parameters"] = config.GetParameters()
-	all["jobConfig"] = config.GetJobConf()
+	all["parameters"] = demoConfig.GetParameters()
+	all["jobRepository"] = getJobRepository()
 	container := Container{All: all}
 	container.InitContainer()
 	def.Register(container)
 
 	return *def
+}
+
+func getJobRepository() demoRepository.JobRepository {
+  return demoRepository.JobRepository{}
 }
