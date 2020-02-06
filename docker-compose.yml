@@ -2,17 +2,17 @@ version: "3.6"
 
 services:
   go:
-    image: ghyt-api:latest
-    build:
-      context: ./docker
-      dockerfile: Dockerfile-go
+    image: golang:1.12.15
     env_file:
       - .env.local
     ports:
      - "5000:9001"
     volumes:
-      - ./:/go
+      - ./:/www
+      - ./bin:/go/bin
+      - /tmp/go/pkg:/go/pkg
     command: CompileDaemon --build="go build main.go" --command=./main
+    working_dir: /www
 
   ngrok:
     image: wernight/ngrok

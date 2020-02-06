@@ -3,7 +3,9 @@ dk_run=$(dk) run --rm
 dk_exec=$(dk) exec
 ## GOLANG
 dkr_go=$(dk_run) go
+dke_go=$(dk_exec) go
 r_go=$(dkr_go) go
+e_go=$(dke_go) go
 ## NGROK
 dkr_ngrok=$(dk_run) ngrok
 r_ngrok=$(dkr_ngrok) ngrok
@@ -12,93 +14,98 @@ dkr_npm=$(dk_run) npm
 dke_npm=$(dk_exec) npm
 r_npm=$(dkr_npm) npm
 e_npm=$(dke_npm) npm
- 
-## DOCKER
-dev@console:
+
+### DOCKER
+dev@dk.go.console:
 	$(dkr_go) bash
 
-dev@build:
-	$(dk) build go
-
-dev@stop:
+dev@dk.stop:
 	$(dk) down --remove-orphan
 
-dev@start:
+dev@dk.go.build:
+	$(dk) build go
+
+dev@dk.go.stop:
+	docker-compose rm -fsv go
+
+dev@dk.go.start:
 	$(dk) up -d go
 
-dev@restart: dev@stop dev@start
+dev@dk.go.restart: dev@dk.go.stop dev@dk.go.start
 
-dev@logs:
-	$(dk) logs -f
+dev@dk.go.logs:
+	$(dk) logs -f go
 
-dev@install: dev@stop dev@mod.download dev@go.install-hot-reload dev@restart
+dev@dk.go.install: dev@go.env.file-copy dev@dk.go.stop dev@go.install-hot-reload dev@dk.go.restart
 
 ## DEV
-dev@mod.clean:
+dev@go:
+	$(r_go) $(c)
+
+# Display source code
+dev@go.mod.vendor:
+	$(r_go) mod vendor
+
+dev@go.mod.tidy:
 	$(r_go) mod tidy
 
-dev@mod.download:
-	$(r_go) mod download
+dev@go.mod.download:
+	$(e_go) mod download
 
 dev@go.install-hot-reload:
 	$(r_go) get github.com/githubnemo/CompileDaemon
 
-dev@init:
-	$(r_go) mod init github.com/cifren/ghyt-api-demo
-
-dev@go:
-	$(r_go) $(c)
-
-dev@go-exec:
+# Generate main ".exe" in bin
+dev@go.install-app:
 	$(r_go) install main.go
-	export APP_ENV=local;./bin/main
+	export APP_ENV=local;./main
 
-dev@go-run:
+dev@go.run-app:
 	$(r_go) run main.go
 
 # Use local code : create a folder vendor and change go.mod to use local code
 # !! Do not push your go.mod anymore !!
-dev@mod.local-dev: dev@git.clone-ghyt-api dev@mod.replace-ghyt-api
+dev@go.mod.local-dev: dev@go.git-clone-ghyt-api dev@go.mod.replace-ghyt-api
 
-dev@mod.replace-ghyt-api:
-	$(r_go) mod edit -replace github.com/cifren/ghyt-api=./vendor/ghyt-api
+dev@go.mod.replace-ghyt-api:
+	$(r_go) mod edit -replace github.com/cifren/ghyt-api=./localvendor/ghyt-api
 
-dev@git.clone-ghyt-api:
-	git clone git@github.com:cifren/ghyt-api.git ./vendor/ghyt-api
+dev@go.git-clone-ghyt-api:
+	git clone git@github.com:cifren/ghyt-api.git ./localvendor/ghyt-api
 
-dev@env.file-copy:
+dev@go.env.file-copy:
 	cp .env.local.dist .env.local
 
-test@install: dev@env.file-copy
+test@go.install: dev@go.env.file-copy
 
-test@run:
+test@go.run:
 	$(r_go) test -race ./main.go
 
-test@run-cover:
+test@go.run-cover:
 	$(r_go) test -cover -race ./main.go
 
-## SERVICES
-dev@ngrok.up:
+### NGROK
+dev@ngrok.start:
 	$(r_ngrok) http go:9001
 
-## NPM
-dev@dknpm.install: dev@npm.install dev@dknpm.restart
+### NPM
+dev@dk.npm.install: dev@npm.install dev@dk.npm.restart
 
-dev@dknpm.start:
+dev@dk.npm.start:
 	$(dk) up -d npm
 
-dev@dknpm.stop:
+dev@dk.npm.stop:
 	docker-compose rm -fsv npm
 
-dev@dknpm.restart: dev@dknpm.stop dev@dknpm.start
+dev@dk.npm.restart: dev@dk.npm.stop dev@dk.npm.start
 
-dev@dknpm.console:
+dev@dk.npm.console:
 	$(dkr_npm) bash
 
-dev@dknpm.logs:
+dev@dk.npm.logs:
 	$(dk) logs -f npm
 
-dev@dknpm.build:
+dev@dk.npm.build:
 	$(dk) build npm
 
 dev@npm.install:

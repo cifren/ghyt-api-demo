@@ -15,7 +15,9 @@
 .env.local
 .env.prod
 
+bin/
 vendor/
+localvendor/
 gopath/
 main
 
