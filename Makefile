@@ -12,7 +12,7 @@ dkr_npm=$(dk_run) npm
 dke_npm=$(dk_exec) npm
 r_npm=$(dkr_npm) npm
 e_npm=$(dke_npm) npm
-
+ 
 ## DOCKER
 dev@console:
 	$(dkr_go) bash
