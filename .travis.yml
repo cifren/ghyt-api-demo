@@ -1,0 +1,10 @@
+sudo: true
+service:
+  - docker
+
+script:
+  - make test@run-cover
+
+notifications:
+  email:
+    - cifren@msn.com
