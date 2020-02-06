@@ -66,6 +66,11 @@ dev@mod.replace-ghyt-api:
 dev@git.clone-ghyt-api:
 	git clone git@github.com:cifren/ghyt-api.git ./vendor/ghyt-api
 
+dev@env.file-copy:
+	cp .env.local.dist .env.local
+
+test@install: dev@env.file-copy
+
 test@run:
 	$(r_go) test -race ./main.go
 
