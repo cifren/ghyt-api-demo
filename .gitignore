@@ -22,7 +22,7 @@ main
 ##### NODE #####
 .DS_Store
 node_modules/
-#dist/
+dist/
 npm-debug.log
 yarn-error.log
 
