@@ -3,7 +3,9 @@ version: "3.6"
 services:
   go:
     image: ghyt-api:latest
-    build: .
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-go
     env_file:
       - .env.local
     ports:
@@ -14,3 +16,15 @@ services:
 
   ngrok:
     image: wernight/ngrok
+
+  npm:
+    image: npm:latest
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-npm
+    volumes:
+      - ./:/home/node/app
+    environment:
+      - NODE_ENV=developpment
+    ports:
+      - "3005:8080"
