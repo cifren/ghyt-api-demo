@@ -14,7 +14,7 @@
     </section>
     <div class="container">
 
-      <b-button @click="clickMe">Create new enty</b-button>
+      <b-button @click="addNewJob">Create new enty</b-button>
 
     </div>
   </div>
@@ -22,13 +22,10 @@
 
 <script>
 export default {
-  name: 'home',
-  mounted:function(){
-
-  },
+  name: 'jobs',
   methods: {
-    clickMe() {
-      this.$buefy.notification.open('Clicked!!')
+    addNewJob() {
+      this.$router.push('/job')
     }
   }
 }

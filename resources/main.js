@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import router from './routes'
 import App from './views/App.vue'
-import 'bulma/css/bulma.css'
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
 import VueRouter from 'vue-router';
 
-Vue.use(VueRouter);
+Vue
+  .use(VueRouter)
+  .use(Buefy);
 
 new Vue({
   router,
