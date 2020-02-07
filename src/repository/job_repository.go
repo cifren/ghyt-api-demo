@@ -4,7 +4,9 @@ import (
   "github.com/cifren/ghyt-api/ghyt/core/config"
 )
 
-type JobRepository struct {}
+type JobRepository struct {
+
+}
 func (JobRepository) GetJobs() []config.Job {
   return []config.Job {}
 }

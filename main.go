@@ -3,11 +3,9 @@ package main
 import (
 	"os"
 	"runtime"
-	"fmt"
     "path/filepath"
 	"github.com/kataras/iris"
 	herolib "github.com/kataras/iris/hero"
-	"github.com/joho/godotenv"
 	. "github.com/cifren/ghyt-api/ghyt/core"
 	. "github.com/cifren/ghyt-api/ghyt/core/handler"
 	"github.com/cifren/ghyt-api-demo/src/config"
