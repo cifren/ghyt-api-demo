@@ -2,9 +2,24 @@ sudo: true
 service:
   - docker
 
-script:
+before_script:
+  ## GO
+  # Install dev env
+  - make dev@dk.go.install
+  # Install test env
   - make test@install
+
+  ## NPM
+  # Install dev env
+  - make dev@dk.npm.install
+
+script:
+  ## GO
   - make test@run-cover
+
+  ## NPM
+  # Run build for prod
+  - make dev@npm.run-prod
 
 notifications:
   email:
