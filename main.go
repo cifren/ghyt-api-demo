@@ -10,7 +10,7 @@ import (
 	"github.com/joho/godotenv"
 	. "github.com/cifren/ghyt-api/ghyt/core"
 	. "github.com/cifren/ghyt-api/ghyt/core/handler"
-	"github.com/cifren/ghyt-api-demo/config"
+	"github.com/cifren/ghyt-api-demo/src/config"
 )
 
 func main() {
