@@ -1,10 +1,14 @@
 <template>
   <div class="container">
-    <b-button @click="addNewCondition">Add Condition</b-button>
-    <div v-for="condition in conditions">
-      <ConditionForm
-        :condition.sync="condition.name"
-      ></ConditionForm>
+    <b-button
+      class="is-primary"
+      @click="addNewCondition">Add Condition</b-button>
+    <div v-for="(condition, key) in conditions">
+      <condition-form
+        :fillBackGround="key % 2 === 0"
+        v-bind.sync="condition"
+        @delete:condition="deleteCondtion(key)"
+      ></condition-form>
     </div>
   </div>
 </template>
@@ -24,12 +28,15 @@
     },
     methods: {
       addNewCondition() {
-        let condition = {"name": "plop", "arguments": "lol"};
+        let condition = {"name": "", "args": "{}"};
         this.conditions.push(condition)
+      },
+      deleteCondtion(key){
+        this.conditions.splice(key, 1)
       },
       addNewAction() {
 
-      }
+      },
     }
   }
 </script>
