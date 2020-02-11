@@ -8,7 +8,9 @@ import (
 	herolib "github.com/kataras/iris/hero"
 	. "github.com/cifren/ghyt-api/ghyt/core"
 	. "github.com/cifren/ghyt-api/ghyt/core/handler"
-	"github.com/cifren/ghyt-api-demo/src/config"
+
+	demoConfig "github.com/cifren/ghyt-api-demo/config"
+	demoRepository "github.com/cifren/ghyt-api-demo/src/repository"
 )
 
 func main() {
