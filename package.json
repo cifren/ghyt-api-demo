@@ -12,6 +12,9 @@
     "start": "npm run build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
     "buefy": "^0.8.*",
     "bulma": "^0.8.*",
     "contentful": "^7.13.*",
