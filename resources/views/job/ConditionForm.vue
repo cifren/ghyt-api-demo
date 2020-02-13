@@ -12,24 +12,25 @@
             <span class="has-text-weight-semibold has-text-primary">Name : </span> {{name}}
           </div>
           <div class="column">
-            <span class="has-text-weight-semibold has-text-primary">Arguments : </span>{{args}}
+            <span class="has-text-weight-semibold has-text-primary">Arguments : </span> {{args}}
           </div>
           <div class="column is-one-fifth">
             <div class="level-right">
               <b-button
-                type="is-danger"
-                icon-right="trash"
-                @click="$emit('delete:condition')"/>
-              <b-button
                 class="is-primary"
                 icon-right="edit"
                 @click="toggleEditable()"></b-button>
+              <b-button
+                type="is-danger"
+                icon-right="trash"
+                @click="$emit('delete:condition')"/>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="isEditable === true">
+    <div
+      v-if="isEditable === true">
       <b-field grouped>
         <b-field label="Name">
           <b-input
@@ -47,13 +48,13 @@
         </b-field>
         <div class="buttons">
           <b-button
-            type="is-danger"
-            icon-right="trash"
-            @click="$emit('delete:condition')"/>
-          <b-button
             class="is-primary"
             icon-right="edit"
             @click="toggleEditable()"></b-button>
+          <b-button
+            type="is-danger"
+            icon-right="trash"
+            @click="$emit('delete:condition')"/>
         </div>
       </b-field>
     </div>
@@ -64,9 +65,12 @@
   export default {
     name: "conditionForm",
     props: ['name', 'args', 'fillBackGround'],
+    mounted() {
+      console.log(this.condition)
+    },
     data(){
       return {
-        isEditable: false,
+        isEditable: this.$props.name === "",
       }
     },
     methods: {
