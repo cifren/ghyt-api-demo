@@ -1,0 +1,41 @@
+{
+  "name": "admin",
+  "description": "A Vue.js project",
+  "version": "1.0.0",
+  "author": "cifren",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_ENV=development webpack-dev-server --hot",
+    "build": "NODE_ENV=production webpack --progress --hide-modules",
+    "heroku-prebuild": "npm install --dev",
+    "start": "npm run build"
+  },
+  "dependencies": {
+    "buefy": "^0.8.*",
+    "bulma": "^0.8.*",
+    "contentful": "^7.13.*",
+    "vue": "^2.6.*",
+    "vue-router": "^3.1.*",
+    "webpack-cli": "^3.3.*"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.*",
+    "babel-loader": "^7.1.*",
+    "babel-preset-env": "^1.6.*",
+    "babel-preset-stage-3": "^6.24.*",
+    "css-loader": "^0.28.*",
+    "file-loader": "^1.1.*",
+    "node-sass": "^4.5.*",
+    "sass-loader": "^6.0.*",
+    "vue-loader": "^14.2.*",
+    "vue-template-compiler": "^2.6.*",
+    "webpack": "^4.41.*",
+    "webpack-dev-server": "^3.10.*"
+  }
+}

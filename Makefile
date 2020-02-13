@@ -13,7 +13,6 @@ dke_npm=$(dk_exec) npm
 r_npm=$(dkr_npm) npm
 e_npm=$(dke_npm) npm
 
-
 ## DOCKER
 dev@console:
 	$(dkr_go) bash
@@ -52,7 +51,7 @@ dev@go:
 
 dev@go-exec:
 	$(r_go) install main.go
-	export APP_ENV=local;./gopath/bin/main
+	export APP_ENV=local;./bin/main
 
 dev@go-run:
 	$(r_go) run main.go
@@ -66,6 +65,17 @@ dev@mod.replace-ghyt-api:
 
 dev@git.clone-ghyt-api:
 	git clone git@github.com:cifren/ghyt-api.git ./vendor/ghyt-api
+
+dev@env.file-copy:
+	cp .env.local.dist .env.local
+
+test@install: dev@env.file-copy
+
+test@run:
+	$(r_go) test -race ./main.go
+
+test@run-cover:
+	$(r_go) test -cover -race ./main.go
 
 ## SERVICES
 dev@ngrok.up:
@@ -99,3 +109,6 @@ dev@npm.install-pkg:
 
 dev@npm.install-pkg-dev:
 	$(e_npm) install --save-dev $(p)
+
+dev@npm.run-prod:
+	$(r_npm) run build
