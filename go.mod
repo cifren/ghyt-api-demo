@@ -10,5 +10,3 @@ require (
 	github.com/kataras/iris v11.1.1+incompatible
 	github.com/stretchr/testify v1.4.0
 )
-
-replace github.com/cifren/ghyt-api => ./localvendor/ghyt-api
