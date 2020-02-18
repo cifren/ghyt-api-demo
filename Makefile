@@ -79,10 +79,14 @@ dev@go.env.file-copy:
 test@go.install: dev@go.env.file-copy
 
 test@go.run:
-	$(r_go) test -race ./main.go
+	$(r_go) test -race ./src/...
 
 test@go.run-cover:
-	$(r_go) test -cover -race ./main.go
+	$(r_go) test -cover -race ./src/...
+
+# Ex : $ make test@run-specific file="github.com/cifren/ghyt-api/youtrack/repository"
+test@go.run-specific:
+	$(r_go) test -race $(p)
 
 ### NGROK
 dev@ngrok.start:

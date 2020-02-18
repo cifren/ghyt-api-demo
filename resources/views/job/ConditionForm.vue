@@ -65,9 +65,6 @@
   export default {
     name: "conditionForm",
     props: ['name', 'args', 'fillBackGround'],
-    mounted() {
-      console.log(this.condition)
-    },
     data(){
       return {
         isEditable: this.$props.name === "",
