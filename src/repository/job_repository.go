@@ -5,18 +5,24 @@ import (
 	"encoding/json"
 	"strconv"
 	"fmt"
+	"errors"
   "github.com/cifren/ghyt-api/ghyt/core/config"
+  "github.com/cifren/ghyt-api/ghyt/core/logger"
   "github.com/cifren/ghyt-api/youtrack/core"
 )
 
 type JobRepository struct {
 	Client core.ClientInterface
+	Logger logger.Logger
 }
-func (this JobRepository) GetJobs() []config.Job {
+func (this JobRepository) GetJobs() ([]config.Job, error) {
 
-  jobMaps := this.getJobsRequest()
-  fmt.Printf("jobMaps %#v\n", jobMaps)
+  jobMaps, err := this.getJobsRequest()
   jobs := []config.Job{}
+
+  if err != nil {
+    return jobs, err
+  }
 
   for _, jobMap := range jobMaps {
 
@@ -36,11 +42,11 @@ func (this JobRepository) GetJobs() []config.Job {
     jobs = append(jobs, job)
   }
 
-  return jobs
+  return jobs, nil
 }
 func (this JobRepository) getJsonJobs() []byte {
   req := core.Request{
-    Endpoint: "/jobs",
+    Endpoint: "jobs",
   }
 
   resp, err := this.Client.Get(req)
@@ -56,7 +62,7 @@ func (this JobRepository) getJsonJobs() []byte {
 }
 func (this JobRepository) getJsonConditions(id int) []byte {
   req := core.Request{
-    Endpoint: "/conditions/" + strconv.Itoa(id),
+    Endpoint: "conditions/" + strconv.Itoa(id),
   }
 
   resp, err := this.Client.Get(req)
@@ -71,7 +77,7 @@ func (this JobRepository) getJsonConditions(id int) []byte {
 }
 func (this JobRepository) getJsonActions(id int) []byte {
   req := core.Request{
-    Endpoint: "/actions/" + strconv.Itoa(id),
+    Endpoint: "actions/" + strconv.Itoa(id),
   }
 
   resp, err := this.Client.Get(req)
@@ -84,21 +90,27 @@ func (this JobRepository) getJsonActions(id int) []byte {
 
   return body
 }
-func (this JobRepository) getJobsRequest() ([]JobRequest) {
+func (this JobRepository) getJobsRequest() ([]JobRequest, error) {
   jsonRequest := this.getJsonJobs()
 
   var jobsRequest []JobRequest
 
   err := json.Unmarshal(jsonRequest, &jobsRequest)
   if err != nil {
-    panic(err)
+    err := errors.New(fmt.Sprintf(
+      "Une erreur s'est produite '%s', sur la route '%s' donnant une reponse '%s'",
+      err,
+      "/jobs",
+      jsonRequest,
+    ))
+    this.Logger.Debug(fmt.Sprintf("%s", err))
+    return jobsRequest, err
   }
 
-  return jobsRequest
+  return jobsRequest, nil
 }
 func (this JobRepository) getCondition(id int) config.Condition {
   jsonRequest := this.getJsonConditions(id)
-  fmt.Printf("jsonRequest %#v\n", string(jsonRequest))
   condition := config.Condition{}
 
   err := json.Unmarshal(jsonRequest, &condition)
