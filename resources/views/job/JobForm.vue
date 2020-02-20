@@ -1,6 +1,30 @@
 <template>
   <div>
-    <div class="title">{{name}}</div>
+    <div class="title level">
+      <div
+        v-if="!isEditable"
+        class="level-left">
+        <div class="level-item">{{name}}</div>
+        <b-button
+          class="is-primary"
+          @click="isEditable = true"
+          icon-left="edit"></b-button>
+      </div>
+      <div v-if="isEditable">
+        <b-field addons>
+          <b-input
+            v-bind:value="name"
+            placeholder="Value"
+            @input="$emit('update:name', $event)" expanded></b-input>
+          <p class="control">
+            <b-button
+              class="is-primary"
+              @click="isEditable = false"
+              icon-left="save"></b-button>
+          </p>
+        </b-field>
+      </div>
+    </div>
     <div class="section">
       <div class="container">
         <div class="columns">
@@ -78,6 +102,7 @@
     props: ['name', 'conditions', 'actions'],
     data: function() {
       return {
+        isEditable: false
       };
     },
     methods: {

@@ -40,14 +40,20 @@
           </div>
           <div class="column is-one-fifth">
             <div class="level-right">
-              <b-button
-                class="is-primary"
-                icon-right="edit"
-                @click="toggleEditable()"></b-button>
-              <b-button
-                type="is-danger"
-                icon-right="trash"
-                @click="$emit('delete:condition')"/>
+              <b-field addons>
+                <p class="control">
+                  <b-button
+                    class="is-primary"
+                    icon-right="edit"
+                    @click="toggleEditable()"></b-button>
+                </p>
+                <p class="control">
+                  <b-button
+                    type="is-danger"
+                    icon-right="trash"
+                    @click="$emit('delete:condition')"/>
+                </p>
+              </b-field>
             </div>
           </div>
         </div>
@@ -99,9 +105,11 @@
               v-bind:value="key"
               placeholder="Key"
               @blur="validKey(key, $event.target.value)?$emit('update:args', updateArgKey(args, key, $event.target.value)):false"></b-input>
-            <b-button
-              class="is-primary"
-              icon-right="angle-double-right"></b-button>
+            <p class="control">
+              <b-button
+                class="is-primary"
+                icon-right="angle-double-right"></b-button>
+            </p>
             <b-input
               v-bind:value="arg"
               placeholder="Value"
