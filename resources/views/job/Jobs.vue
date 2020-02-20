@@ -33,12 +33,14 @@
                 <job-preview
                   v-for="job in jobs"
                   v-bind:key="job.id"
-                  :title="job.title"
+                  :title="job.name"
                   @click.native="selectJob(job)"
                   :class="{
-                    'active': isActiveJob(job)
+                    'active': isActiveJob(job),
+                    'is-loading': isLoadingJobs
                   }"
                 ></job-preview>
+                <b-loading :is-full-page="false" :active.sync="isLoadingJobs" :can-cancel="true"></b-loading>
               </div>
             </div>
             <div
@@ -48,8 +50,9 @@
               }">
               <div class="box">
                 <job-form
-                  v-if="selectedJob"
-                  v-bind.sync="selectedJob"></job-form>
+                  v-if="hasActiveJob()"
+                  v-bind.sync="selectedJob"
+                ></job-form>
               </div>
             </div>
           </div>
@@ -73,85 +76,17 @@
     data: function() {
       return {
         selectedJob: null,
-        jobs: [
-          {
-            id:1,
-            title: "my job 1",
-            conditions: [
-              {
-                "name": "equal",
-                "args": {
-                  "variableName": "event.pull_request.state",
-                  "value": "open"
-                },
-                "jobId": 1,
-                "id": 1
-              },
-              {
-                "name": "regex",
-                "args": {
-                  "variableName": "event.pull_request.title",
-                  "value": "connect-[^-][0-9]*",
-                  "persistName": "yt_id"
-                },
-                "jobId": 1,
-                "id": 2
-              }
-            ],
-            actions: [
-              {
-                "to": "youtrack",
-                "name": "addTag",
-                "args": {
-                  "youtrackId": "yt_id",
-                  "tagName": "nok"
-                },
-                "jobId": 1,
-                "id": 1
-              },
-              {
-                "to": "youtrack",
-                "name": "removeTag",
-                "args": {
-                  "youtrackId": "yt_id",
-                  "tagName": "nok"
-                },
-                "jobId": 1,
-                "id": 2
-              }
-            ]
-          },
-          {
-            title: "my job 2",
-            id:2,
-            conditions: [],
-            actions: []
-          },
-          {
-            title: "my job 3",
-            id:3,
-            conditions: [],
-            actions: []
-          },
-          {
-            title: "my job 4",
-            id:4,
-            conditions: [],
-            actions: []
-          },
-          {
-            title: "my job 5",
-            id:5,
-            conditions: [],
-            actions: []
-          },
-        ],
+        jobs: [],
+        isLoadingJobs: true,
+        islod: false,
       };
     },
     mounted() {
-      //this.axios.get(ghytConfApi + '/jobs').then(response => this.jobs = response.data);
-    },
-    computed: {
+      this.axios.get(ghytConfApi + '/jobs')
+        .then(response => {
+          this.isLoadingJobs = false
+          this.jobs = response.data
+        });
     },
     methods: {
       hasActiveJob(){
@@ -165,7 +100,7 @@
       },
       selectJob(job) {
         this.selectedJob = job
-      }
+      },
     },
   };
 </script>

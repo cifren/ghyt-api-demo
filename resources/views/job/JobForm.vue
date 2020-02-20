@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">{{title}}</div>
+    <div class="title">{{name}}</div>
     <div class="section">
       <div class="container">
         <div class="columns">
@@ -15,6 +15,7 @@
               <condition-form
                 :fillBackGround="key % 2 === 0"
                 v-bind.sync="condition"
+                :args.sync="condition.arguments"
                 @delete:condition="deleteCondition(key)"
                 @update:jsonargs="updateJsonArgs($event)"
               ></condition-form>
@@ -46,6 +47,7 @@
                 <action-form
                   :fillBackGround="key % 2 === 0"
                   v-bind.sync="action"
+                  :args.sync="action.arguments"
                   @delete:action="deleteAction(key)"
                 ></action-form>
               </div>
@@ -73,7 +75,7 @@
       ConditionForm,
       ActionForm
     },
-    props: ['title', 'conditions', 'actions'],
+    props: ['name', 'conditions', 'actions'],
     data: function() {
       return {
       };
