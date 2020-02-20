@@ -21,7 +21,9 @@
                 <div class="field has-addons">
                   <p class="control">
                     <b-button
-                      icon-right="plus"></b-button>
+                      icon-right="plus"
+                      @click="addJob()"
+                    ></b-button>
                   </p>
                   <p class="control">
                     <b-button
@@ -95,8 +97,8 @@
       isActiveJob(job){
         return this.selectedJob !== null && job.id === this.selectedJob.id
       },
-      addNewJob() {
-        this.$router.push('/job');
+      addJob() {
+        this.jobs.push({'name': 'new job', conditions: [], actions: []})
       },
       selectJob(job) {
         this.selectedJob = job
