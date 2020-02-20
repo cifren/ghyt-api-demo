@@ -98,7 +98,7 @@
             <b-input
               v-bind:value="key"
               placeholder="Key"
-              @input="validKey(key, $event)?$emit('update:args', updateArgKey(args, key, $event)):false"></b-input>
+              @blur="validKey(key, $event.target.value)?$emit('update:args', updateArgKey(args, key, $event.target.value)):false"></b-input>
             <b-button
               class="is-primary"
               icon-right="angle-double-right"></b-button>
