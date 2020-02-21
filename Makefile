@@ -103,8 +103,13 @@ dev@dk.npm.stop:
 
 dev@dk.npm.restart: dev@dk.npm.stop dev@dk.npm.start
 
-dev@dk.npm.console:
+dev@dke.npm.console:
+	$(dke_npm) bash
+
+dev@dkr.npm.console:
 	$(dkr_npm) bash
+
+dev@dk.npm.console: dev@dke.npm.console
 
 dev@dk.npm.logs:
 	$(dk) logs -f npm
