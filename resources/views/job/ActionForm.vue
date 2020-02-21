@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <transition name="fade">
     <div
+      key="saved"
       :class="{
         'box': true,
         'has-background-light': !fillBackGround
@@ -60,6 +61,7 @@
       </div>
     </div>
     <div
+      key="edit"
       v-if="isEditable === true"
       :class="{
         'card': true,
@@ -135,7 +137,7 @@
         </a>
       </footer>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
