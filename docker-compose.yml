@@ -29,5 +29,7 @@ services:
       # PROD server
       - PORT=8081
     ports:
+      # Webpack dev server
       - "3005:8080"
+      # Npm start webserver
       - "3006:8081"
