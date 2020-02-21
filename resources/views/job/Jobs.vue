@@ -115,10 +115,34 @@
         .catch(error => {
           this.isLoadingJobs = false
           this.errorMessage = error
-          console.log('oups error', error)
         });
     },
+    created: function () {
+      this.debouncedSaving = _.debounce(this.save, 2000)
+    },
+    watch: {
+      jobs: {
+        deep: true,
+        handler(){
+          console.log('watch jobs')
+          this.debouncedSaving()
+        }
+      }
+    },
     methods: {
+      save(){
+        console.log('saving')
+        // this.axios.post(ghytConfApi + '/jobs')
+        //   .then(response => {
+        //     this.isLoadingJobs = false
+        //     this.jobs = response.data
+        //   })
+        //   .catch(error => {
+        //     this.isLoadingJobs = false
+        //     this.errorMessage = error
+        //     console.log('oups error', error)
+        //   });
+      },
       hasActiveJob(){
         return this.selectedJob !== null
       },

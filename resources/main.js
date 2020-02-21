@@ -4,9 +4,10 @@ import App from './views/App.vue'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import './assets/ghyt-admin.css'
-import VueRouter from 'vue-router';
+import VueRouter from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import _ from 'lodash'
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 // internal icons
@@ -17,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 Vue.component('vue-fontawesome', FontAwesomeIcon);
 
+Vue.prototype._ = _
 Vue
   .use(VueRouter)
   .use(VueAxios, axios)
