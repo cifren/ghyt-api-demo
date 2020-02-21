@@ -1,12 +1,13 @@
 var path = require('path')
 var webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './resources/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: '/dist',
     filename: 'build.js'
   },
   optimization: {
@@ -81,6 +82,7 @@ module.exports = {
   },
   devServer: {
     host: '0.0.0.0',
+    // For docker purposes and hotreload
     public: '0.0.0.0:3005',
     historyApiFallback: true,
     noInfo: true,
@@ -91,6 +93,11 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Ghyt',
+      template: 'index.html',
+      inject: false
+    }),
     new Dotenv({
       path: path.resolve(__dirname, './.env.local'),
       silent: true
@@ -107,7 +114,9 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        GHYT_CONF_API: `"${process.env.GHYT_CONF_API}"`,
+        VUE_APP_TITLE: `"${process.env.VUE_APP_TITLE}"`,
       }
     }),
     new webpack.LoaderOptionsPlugin({
