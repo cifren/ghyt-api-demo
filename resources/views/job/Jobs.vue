@@ -102,6 +102,11 @@
       };
     },
     mounted() {
+      if(ghytConfApi === undefined){
+        this.errorMessage = "Error : The API url is missing"
+        return
+      }
+
       this.axios.get(ghytConfApi + '/jobs')
         .then(response => {
           this.isLoadingJobs = false
