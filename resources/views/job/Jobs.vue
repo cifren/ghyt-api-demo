@@ -15,7 +15,7 @@
     <section class="section">
       <div class="container">
         <div class="box">
-          <div class="columns">
+          <div class="columns" v-if="!errorMessage">
             <div class="column is-4">
 
               <div class="columns">
@@ -70,6 +70,12 @@
               </div>
             </div>
           </div>
+          <b-notification
+            v-if="errorMessage"
+            type="is-danger"
+            aria-close-label="notification">
+            {{errorMessage}}
+          </b-notification>
         </div>
       </div>
     </section>
@@ -92,7 +98,7 @@
         selectedJob: null,
         jobs: [],
         isLoadingJobs: true,
-        islod: false,
+        errorMessage: null
       };
     },
     mounted() {
@@ -100,6 +106,11 @@
         .then(response => {
           this.isLoadingJobs = false
           this.jobs = response.data
+        })
+        .catch(error => {
+          this.isLoadingJobs = false
+          this.errorMessage = error
+          console.log('oups error', error)
         });
     },
     methods: {
