@@ -26,5 +26,8 @@ services:
       - ./:/home/node/app
     environment:
       - NODE_ENV=developpment
+      # PROD server
+      - PORT=8081
     ports:
       - "3005:8080"
+      - "3006:8081"
