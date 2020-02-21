@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <transition name="fade">
     <div
+      key="saved"
       :class="{
         'box': true,
         'has-background-light': !fillBackGround
@@ -51,7 +52,8 @@
       </div>
     </div>
     <div
-      v-if="isEditable === true"
+      key="edit"
+      v-else
       :class="{
         'card': true,
         'has-background-light': !fillBackGround
@@ -119,7 +121,7 @@
         </a>
       </footer>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -129,6 +131,7 @@
     data(){
       return {
         isEditable: this.$props.name === "",
+        isEditing: true
       }
     },
     methods: {

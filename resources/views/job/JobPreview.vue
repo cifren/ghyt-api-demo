@@ -3,7 +3,7 @@
     <div class="card-content">
       <div class="media">
         <div class="media-content">
-          <p class="title">
+          <p class="title is-capitalized">
             <b-icon icon="briefcase" size="is-large" type="is-primary"/>
             {{title}}
           </p>

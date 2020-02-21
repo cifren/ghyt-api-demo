@@ -4,7 +4,7 @@
       <div
         v-if="!isEditable"
         class="level-left">
-        <div class="level-item">{{name}}</div>
+        <div class="level-item is-capitalized">{{name}}</div>
         <b-button
           class="is-primary"
           @click="isEditable = true"
