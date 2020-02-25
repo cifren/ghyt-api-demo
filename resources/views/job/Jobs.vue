@@ -121,27 +121,69 @@
       this.debouncedSaving = _.debounce(this.save, 2000)
     },
     watch: {
-      jobs: {
+      selectedJob: {
         deep: true,
-        handler(){
-          console.log('watch jobs')
-          this.debouncedSaving()
+        handler(newJob, oldJob){
+          // update only
+          if(newJob === null || oldJob === null){
+            return
+          }
+          if(newJob.id !== oldJob.id){
+            return
+          }
+          this.debouncedSaving(newJob)
         }
-      }
+      },
     },
     methods: {
-      save(){
-        console.log('saving')
-        // this.axios.post(ghytConfApi + '/jobs')
-        //   .then(response => {
-        //     this.isLoadingJobs = false
-        //     this.jobs = response.data
-        //   })
-        //   .catch(error => {
-        //     this.isLoadingJobs = false
-        //     this.errorMessage = error
-        //     console.log('oups error', error)
-        //   });
+      save(job){
+        if(job.id === null)
+          return
+        this.remotePatchJob(job)
+      },
+      // update job
+      remotePatchJob(job){
+        console.log(job)
+        this.axios.patch(ghytConfApi + '/jobs/' + job.id, job)
+          .then(() => {
+            this.$buefy.toast.open(this.getToastSuccessConf('updated'))
+          })
+          .catch(error => {
+            this.$buefy.toast.open({
+              message: 'Error Happened: ' + error.message,
+              duration: 10000,
+              type: 'is-danger'
+            })
+          });
+      },
+      // create job
+      remotePostJob(job){
+        this.axios.post(ghytConfApi + '/jobs', job)
+          .then((response) => {
+            this.$buefy.toast.open(this.getToastSuccessConf('added'))
+            job.id = response.data.id
+          })
+          .catch(error => {
+            this.$buefy.toast.open({
+              message: 'Error Happened: ' + error.message,
+              duration: 10000,
+              type: 'is-danger'
+            })
+          });
+      },
+      // create job
+      remoteDeleteJob(job){
+        return this.axios.delete(ghytConfApi + '/jobs/' + job.id)
+          .then((response) => {
+            this.$buefy.toast.open(this.getToastSuccessConf('deleted'))
+          })
+          .catch(error => {
+            this.$buefy.toast.open({
+              message: 'Error Happened: ' + error.message,
+              duration: 10000,
+              type: 'is-danger'
+            })
+          });
       },
       hasActiveJob(){
         return this.selectedJob !== null
@@ -149,18 +191,31 @@
       isActiveJob(job){
         return this.selectedJob !== null && job.id === this.selectedJob.id
       },
-      addJob() {
-        const id = Math.floor(Math.random() * 900)
-        this.jobs.push({'name': 'new job '+id, conditions: [], actions: [], id: id})
+      addJob(){
+        this.jobs.push({'name': 'new job', conditions: [], actions: []})
+        this.selectedJob = this.jobs[this.jobs.length-1]
+        this.remotePostJob(this.selectedJob)
       },
-      deleteJob() {
-        const index = this.jobs.findIndex(element => this.selectedJob.id === element.id)
-        this.jobs.splice(index, 1)
-        this.selectedJob = this.jobs.length>=1?this.jobs[index]?this.jobs[index]:this.jobs[index-1]:null
+      deleteJob(){
+        this
+          .remoteDeleteJob(this.selectedJob)
+          .then(()=>{
+            const index = this.jobs.findIndex(element => this.selectedJob.id === element.id)
+            this.jobs.splice(index, 1)
+            this.selectedJob = this.jobs.length>=1?this.jobs[index]?this.jobs[index]:this.jobs[index-1]:null
+          })
       },
-      selectJob(job) {
+      selectJob(job){
         this.selectedJob = job
       },
+      getToastSuccessConf(actionMessage){
+        return {
+          message: 'Sucessfully ' + actionMessage,
+          type: 'is-success',
+          queue: false,
+          position: 'is-top-right'
+        }
+      }
     },
   };
 </script>

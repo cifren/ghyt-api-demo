@@ -9,7 +9,7 @@ e_go=$(dke_go) go
 ## NGROK
 dkr_ngrok=$(dk_run) ngrok
 r_ngrok=$(dkr_ngrok) ngrok
-## NGROK
+## NPM
 dkr_npm=$(dk_run) npm
 dke_npm=$(dk_exec) npm
 r_npm=$(dkr_npm) npm
