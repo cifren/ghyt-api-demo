@@ -1,8 +1,9 @@
-package Repository
+package repository
 
 import (
 	"io"
 	"fmt"
+	"bytes"
 	"net/http"
 	"net/url"
   "github.com/cifren/ghyt-api/youtrack/core"
@@ -24,6 +25,12 @@ func (this Client) Post(request core.Request) (http.Response, error){
 }
 func (this Client) Request(request core.Request) (http.Response, error){
   var body io.Reader
+	if request.Body != nil {
+		body = request.GetJsonBody()
+		fmt.Println("herere")
+	}
+
+	fmt.Printf("jsonBody %#v\n", request.GetJsonBody().String())
 
   url, err := url.Parse(this.Url + "/" + request.Endpoint)
 
@@ -33,20 +40,36 @@ func (this Client) Request(request core.Request) (http.Response, error){
 		body,
 	)
 
-	this.Logger.Debug(fmt.Sprintf(
-    "Request '%s' : %s, headers => %+v",
-    request.Method,
-    url.String(),
-    req.Header,
-  ))
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
+
+	for k, v := range request.Headers {
+		req.Header.Add(k, v)
+	}
+	if body != nil {
+		fmt.Println(fmt.Sprintf(
+			"Request '%s' : %s, headers => %+v, body => %s",
+			request.Method,
+			url.String(),
+			req.Header,
+			body.(*bytes.Buffer).String(),
+		))
+	} else {
+		fmt.Println(fmt.Sprintf(
+			"Request '%s' : %s, headers => %+v",
+			request.Method,
+			url.String(),
+			req.Header,
+		))
+	}
 
 	if err != nil {
-	  panic(err)
+	  return http.Response{}, err
 	}
 
 	res, err := this.http.Do(req)
 	if err != nil {
-	  panic(err)
+	  return http.Response{}, err
 	}
 
 	return *res, nil
