@@ -33,12 +33,14 @@ func main() {
 	app.Get("/conf", def.Handler(func(ctx iris.Context, container Container) {
 		jobs, err := container.Get("jobsConfRepository").(demoRepository.JobRepository).GetJobs()
 		if err != nil {
-		  ctx.JSON(struct{Message string}{Message: fmt.Sprintf("%s", err)})
+		  ctx.JSON(map[string]interface{}{"message": fmt.Sprintf("%s", err)})
 		  return
 		}
 
 		ctx.JSON(jobs)
 	}))
+
+  app.OnErrorCode(iris.StatusInternalServerError, internalServerError)
 
 	app.Run(iris.Addr(":" + os.Getenv("PORT")), iris.WithoutServerError(iris.ErrServerClosed))
 }
@@ -54,6 +56,7 @@ func register() herolib.Hero {
 	all := make(map[string]interface{})
 	all["parameters"] = demoConfig.GetParameters()
 	all["jobsConfRepository"] = getJobRepository()
+	all["jobLogRepository"] = getJobLogRepository()
 	container := Container{All: all}
 	container.InitContainer()
 	def.Register(container)
@@ -69,4 +72,18 @@ func getJobRepository() demoRepository.JobRepository {
     },
     Logger: logger.NewLogger(logger.DEBUG),
   }
+}
+
+func getJobLogRepository() demoRepository.JobLogRepository {
+  return demoRepository.JobLogRepository{
+    Client: demoRepository.Client{
+      Url: os.Getenv("GHYT_CONF_API"),
+      Logger: logger.NewLogger(logger.DEBUG),
+    },
+    Logger: logger.NewLogger(logger.DEBUG),
+  }
+}
+
+func internalServerError(ctx iris.Context) {
+    ctx.JSON(map[string]interface{}{"message": "Oups something went wrong, try again"})
 }
