@@ -3,7 +3,7 @@
     <div>
       <div>
         <div class="title">Ran at
-          <span class="has-text-primary">{{created_at | moment("YYYY/MM/DD h:mm:ss")}}</span>
+          <span class="has-text-primary">{{created_at | moment("YYYY/MM/DD HH:mm:ss")}}</span>
         </div>
         <div class="section box">
           <div class="subtitle has-text-primary has-text-weight-bold">Request</div>
