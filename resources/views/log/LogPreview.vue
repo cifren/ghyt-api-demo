@@ -5,7 +5,7 @@
         <div class="media-content">
           <p class="title is-capitalized">
             <b-icon icon="briefcase" size="is-large" type="is-primary"/>
-            {{created_at | moment("YYYY/MM/DD h:mm:ss")}}
+            {{created_at | moment("YYYY/MM/DD HH:mm:ss")}}
           </p>
         </div>
       </div>
