@@ -4,7 +4,7 @@ import Jobs from './views/job/Jobs.vue'
 import JobForm from './views/job/JobForm.vue'
 import ActionForm from './views/job/ActionForm.vue'
 import ConditionForm from './views/job/ConditionForm.vue'
-import Logs from './views/Logs.vue'
+import Logs from './views/log/Logs.vue'
 
 let appname = process.env.VUE_APP_TITLE
 
