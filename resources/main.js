@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import _ from 'lodash'
 import 'buefy/dist/buefy.css'
+import moment from 'vue-moment'
 
 import './assets/ghyt-admin.css'
 import router from './routes'
@@ -27,6 +28,7 @@ Vue
     defaultIconComponent: 'vue-fontawesome',
     defaultIconPack: 'fa',
   })
+  .use(moment)
 
 new Vue({
   router,

@@ -2,9 +2,11 @@
   <div>
     <div>
       <div>
-        <div class="title">{{created_at}}</div>
+        <div class="title">Ran at
+          <span class="has-text-primary">{{created_at | moment("YYYY/MM/DD h:mm:ss")}}</span>
+        </div>
         <div class="section box">
-          <div class="subtitle">Request</div>
+          <div class="subtitle has-text-primary has-text-weight-bold">Request</div>
           <vue-json-pretty
             :data="request"
             :highlightMouseoverNode="true"
@@ -13,12 +15,12 @@
           </vue-json-pretty>
         </div>
         <div class="section box">
-          <div class="subtitle">Feedback</div>
+          <div class="subtitle has-text-primary has-text-weight-bold">Feedback</div>
           <vue-json-pretty
             :data="feedback"
             :highlightMouseoverNode="true"
             :showDoubleQuotes="false"
-            :deep="2">
+            :deep="4">
           </vue-json-pretty>
         </div>
       </div>
