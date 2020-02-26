@@ -84,7 +84,12 @@
       this.axios.get(ghytConfApi + '/logs')
       .then(response => {
         this.isLoadingLogs = false
-        this.logs = response.data
+        response.data = response.data.map((element) => {
+          element.created_at = new Date(element.created_at)
+          return element
+        })
+
+        this.logs = response.data.sort((a, b) => b.created_at - a.created_at)
       })
       .catch(error => {
         this.isLoadingLogs = false
